@@ -4,6 +4,7 @@ import User from '../models/user'
 import passport from 'passport'
 import jwt from 'jsonwebtoken';
 import Mail from '../lib/mail'
+import FileSystem from '../lib/filesystem'
 
 api.post('/register', async (req, res, next) => {
   const { nickname, email, password, password_confirmation } = req.body
@@ -12,6 +13,7 @@ api.post('/register', async (req, res, next) => {
   console.log('BODY --->', password);
 
   try {
+    
     const user = new User({
       nickname,
       email,
@@ -21,7 +23,9 @@ api.post('/register', async (req, res, next) => {
   
     await user.save()
 
-    console.log('USER -->' , user)
+    FileSystem.addUserWorkspace(user)
+
+    // console.log('USER -->' , user)
 
     let text = 'You are successfull register'
     Mail.send(user.email, "welcome", text, `<h1>${text}</h1>`)

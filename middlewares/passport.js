@@ -40,7 +40,7 @@ passport.use(
         const user = await User.findOne({ where: { uuid: jwtPayload.uuid } });
 
         if (user) {
-          done(false, null);
+          done(null, user);
         }
       } catch (err) {
         done(err);

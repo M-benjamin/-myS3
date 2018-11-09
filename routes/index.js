@@ -2,8 +2,10 @@
 import { Router } from 'express';
 const api = Router()
 import users from './user'
+import buckets from './bucket'
 import auth from './auth'
 import Mail from "../lib/mail"
+import passport from "passport"
 
 api.get('/', (req, res, next) => {
   res.json({hello: 'Hello'})
@@ -11,7 +13,8 @@ api.get('/', (req, res, next) => {
   next()
 })
 
-api.use('/users', users)
+api.use('/users',passport.authenticate("jwt", {session: false}) ,users)
+api.use('/users/:uuid/buckets', passport.authenticate("jwt", {session: false}) , buckets)
 api.use('/auth', auth)
 
 export default api;

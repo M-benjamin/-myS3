@@ -17,7 +17,7 @@ const start = async () => {
   try {
     await database.authenticate();
     if (process.env.APP === 'development') {
-      database.sync({force: process.env.DATABASE_SYNC_FORCE});
+      database.sync({force: false});
     }
     
     app.use('/api', routes)
