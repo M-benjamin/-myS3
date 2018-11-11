@@ -11,23 +11,17 @@ api.post('/', async (req, res) => {
       const { uuid } = req.user
       const { name } = req.body
 
-      console.log(name, req.params);
-      console.log(name, uuid);
-      
-
       const bucket = new Bucket({
         name,
         user_uuid: uuid
       })
 
       // > Before save ----- change file name
-      // /opt/$uuid/$name/
       FileSystem.createBucket(req.user, name)
 
       bucket.save()
 
       res.status(201).json({ data: { bucket }, meta: { }});
-
     } catch (error) {
       console.log(error);
       res.status(400).json({err: error})
@@ -87,7 +81,6 @@ api.delete('/:id', async (req, res) => {
 });
 
 api.head('/:id', async (req, res) => {
-  
   try {
     const bucket = await Bucket.findOne({ where: {id: req.params.id}});
 

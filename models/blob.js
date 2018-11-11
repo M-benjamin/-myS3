@@ -8,7 +8,7 @@ export default class Blob extends Model {
         defaultValue:DataTypes.UUIDV4,
         primaryKey: true
       },
-      name: {
+      filename: {
         type: DataTypes.STRING,
         allowNull: false,
       },
